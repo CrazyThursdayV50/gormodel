@@ -1,0 +1,2 @@
+# gormodel
+.sql -> .go
