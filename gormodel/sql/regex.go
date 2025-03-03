@@ -99,8 +99,6 @@ func matchColumnAutoIncrement(columnLineStr string) bool {
 
 const columnDefaultValueStr = "(?i)\n\\s+`\\w+`\\s+.*DEFAULT\\s+['\"]?([^'\"]+)?['\"]?.*"
 
-// const columnDefaultValueStr = "(?i)\n\\s+`\\w+`\\s+.*DEFAULT\\s+['\"]?([^'\"]+)?['\"]?.*,?"
-
 var columnDefaultValueReg = regexp.MustCompile(columnDefaultValueStr)
 
 func matchColumnDefaultValue(columnLineStr string) string {
