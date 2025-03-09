@@ -33,14 +33,20 @@ func main() {
 		template.CheckDefaultSchema(fileName)
 
 		packageName := sql.ReadPackage(fileName)
-		content := fmt.Sprintf(
-			strings.Join(template.SchemaFormat, "\n"),
-			packageName,
-			time.Now().Format(time.RFC3339),
-			schema.Write(),
-			pkg.Camel(schema.Schema),
-			schema.Schema,
-		)
+		
+		// 使用模板渲染.model.go文件
+		data := template.ModelTemplate{
+			PackageName: packageName,
+			Timestamp:   time.Now().Format(time.RFC3339),
+			ModelCode:   schema.Write(),
+			ModelName:   pkg.Camel(schema.Schema),
+			TableName:   schema.Schema,
+		}
+		
+		content, err := template.RenderModelTemplate(data)
+		if err != nil {
+			panic(err)
+		}
 
 		os.Rename(fileName, fileName+".bak")
 
