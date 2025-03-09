@@ -1,0 +1,21 @@
+CREATE TABLE `post` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int unsigned NOT NULL COMMENT '作者ID',
+  `title` varchar(200) NOT NULL COMMENT '标题',
+  `slug` varchar(200) NOT NULL COMMENT 'URL友好的标题',
+  `content` text NOT NULL COMMENT '内容',
+  `excerpt` varchar(500) NOT NULL DEFAULT '' COMMENT '摘要',
+  `status` tinyint NOT NULL DEFAULT '1' COMMENT '状态：1-已发布，2-草稿，3-待审核，0-已删除',
+  `comment_status` tinyint NOT NULL DEFAULT '1' COMMENT '评论状态：1-开放，0-关闭',
+  `view_count` int unsigned NOT NULL DEFAULT '0' COMMENT '浏览次数',
+  `comment_count` int unsigned NOT NULL DEFAULT '0' COMMENT '评论数',
+  `like_count` int unsigned NOT NULL DEFAULT '0' COMMENT '点赞数',
+  `published_at` datetime DEFAULT NULL COMMENT '发布时间',
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_slug` (`slug`),
+  KEY `idx_user` (`user_id`),
+  KEY `idx_status` (`status`),
+  KEY `idx_published_at` (`published_at`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci; 

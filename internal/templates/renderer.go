@@ -1,4 +1,4 @@
-package template
+package templates
 
 import (
 	"bytes"
@@ -22,7 +22,7 @@ type SchemaTemplate struct {
 
 // RenderModelTemplate 渲染.model.go文件的模板
 func RenderModelTemplate(data ModelTemplate) (string, error) {
-	tmplContent, err := templateFS.ReadFile("templates/model.tmpl")
+	tmplContent, err := TemplateFS.ReadFile("tmpl/model.tmpl")
 	if err != nil {
 		return "", err
 	}
@@ -42,7 +42,7 @@ func RenderModelTemplate(data ModelTemplate) (string, error) {
 
 // RenderSchemaTemplate 渲染Schema.model.go文件的模板
 func RenderSchemaTemplate(data SchemaTemplate) (string, error) {
-	tmplContent, err := templateFS.ReadFile("templates/schema.tmpl")
+	tmplContent, err := TemplateFS.ReadFile("tmpl/schema.tmpl")
 	if err != nil {
 		return "", err
 	}

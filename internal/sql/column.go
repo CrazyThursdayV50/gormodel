@@ -2,7 +2,7 @@ package sql
 
 import (
 	"fmt"
-	"gormodel/pkg"
+	"gormodel/internal/utils"
 	"strings"
 )
 
@@ -53,12 +53,12 @@ func (c *Column) column(schema string) string {
 			schema,
 			strings.ToLower(string([]byte{c.name[0]}))+c.name[1:],
 			c.GoType(),
-			pkg.Snake(c.name)))
+			utils.Snake(c.name)))
 
 	columns = append(columns,
 		fmt.Sprintf(schemaColumnTemplate,
-			pkg.Camel(schema),
-			pkg.Camel(c.name),
+			utils.Camel(schema),
+			utils.Camel(c.name),
 			c.GoType(),
 			schema,
 			c.name,
@@ -69,7 +69,7 @@ func (c *Column) column(schema string) string {
 
 func (c *Column) Write() string {
 	columnFormat := "%s %s `gorm:\"%s\" json:\"%s\"`"
-	return fmt.Sprintf(columnFormat, pkg.Camel(c.name), c.GoType(), c.gorm(), pkg.Snake(c.name))
+	return fmt.Sprintf(columnFormat, utils.Camel(c.name), c.GoType(), c.gorm(), utils.Snake(c.name))
 }
 
 func (c *Column) GoType() string {
@@ -87,7 +87,7 @@ func (c *Column) GoType() string {
 func (c *Column) gorm() string {
 	// fmt.Printf("column: %#v\n", c)
 	var collects []string
-	collects = append(collects, "column:"+pkg.Snake(c.name))
+	collects = append(collects, "column:"+utils.Snake(c.name))
 	if c.unsigned {
 		c.typ += " unsigned"
 	}

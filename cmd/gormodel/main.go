@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"gormodel/gormodel/sql"
-	"gormodel/gormodel/template"
-	"gormodel/pkg"
+	"gormodel/internal/sql"
+	"gormodel/internal/templates"
+	"gormodel/internal/utils"
 	"os"
 	"os/exec"
 	"strings"
@@ -17,7 +17,7 @@ import (
 // 如果修改前的 column 有default value，且此 default value
 // 值在修改后没有发生变化，那么此 column 也不会触发 alter column 更新
 func main() {
-	root := pkg.GetRootPath()
+	root := utils.GetRootPath()
 	fmt.Printf("root: %v\n", root)
 	var sqlFiles = sql.ListAllSqlFiles(root)
 	var schemas []*sql.Schema
@@ -30,20 +30,20 @@ func main() {
 	for _, schema := range schemas {
 		fileName := strings.ReplaceAll(schema.Path, ".sql", ".model.go")
 		fmt.Printf("Write %s\n", fileName)
-		template.CheckDefaultSchema(fileName)
+		templates.CheckDefaultSchema(fileName)
 
 		packageName := sql.ReadPackage(fileName)
 		
 		// 使用模板渲染.model.go文件
-		data := template.ModelTemplate{
+		data := templates.ModelTemplate{
 			PackageName: packageName,
 			Timestamp:   time.Now().Format(time.RFC3339),
 			ModelCode:   schema.Write(),
-			ModelName:   pkg.Camel(schema.Schema),
+			ModelName:   utils.Camel(schema.Schema),
 			TableName:   schema.Schema,
 		}
 		
-		content, err := template.RenderModelTemplate(data)
+		content, err := templates.RenderModelTemplate(data)
 		if err != nil {
 			panic(err)
 		}

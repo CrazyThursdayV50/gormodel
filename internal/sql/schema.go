@@ -2,7 +2,7 @@ package sql
 
 import (
 	"fmt"
-	"gormodel/pkg"
+	"gormodel/internal/utils"
 	"os"
 	"strings"
 )
@@ -25,7 +25,7 @@ func (s *Schema) Write() string {
 	parts = append(parts,
 		fmt.Sprintf(
 			schemaFormat,
-			pkg.Camel(s.Schema),
+			utils.Camel(s.Schema),
 			strings.Join(columnLines, "\n"),
 		),
 	)

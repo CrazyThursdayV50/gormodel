@@ -6,7 +6,7 @@
 ** Author: Gormodel
  */
 
-package school
+package shop
 
 import (
 	"fmt"
