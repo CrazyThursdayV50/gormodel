@@ -147,7 +147,7 @@ const (
 	keyColumnStr = "\\((:?`\\w+`)(:?\\s*,*\\s*`\\w+`)*\\)"
 )
 
-const primaryKeyLineStr = "(?i)\n\\s*PRIMARY\\s+KEY\\s+(?:`\\w+`\\s+)?\\(`\\w+`(?:,\\s?\\w+)*\\)"
+const primaryKeyLineStr = "(?i)\n\\s*PRIMARY\\s+KEY\\s+(?:`\\w+`\\s+)?\\(`\\w+`(?:,\\s?`\\w+`)*\\)"
 
 var primaryKeyLineReg = regexp.MustCompile(primaryKeyLineStr)
 
@@ -175,7 +175,7 @@ const columnNameStr = "`(\\w+)`"
 
 var columnNameReg = regexp.MustCompile(columnNameStr)
 
-const uniqueKeyLineStr = "(?i)\n\\s*UNIQUE\\s+KEY\\s+(?:`\\w+`\\s+)?\\(`\\w+`(?:,\\s?\\w+)*\\)"
+const uniqueKeyLineStr = "(?i)\n\\s*UNIQUE\\s+KEY\\s+(?:`\\w+`\\s+)?\\(`\\w+`(?:,\\s?`\\w+`)*\\)"
 
 var uniqueKeyLineReg = regexp.MustCompile(uniqueKeyLineStr)
 
