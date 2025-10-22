@@ -87,6 +87,16 @@ func (c *Column) GoType() string {
 func (c *Column) gorm() string {
 	// fmt.Printf("column: %#v\n", c)
 	var collects []string
+	if c.isPrimaryKey {
+		collects = append(collects, "primaryKey")
+	}
+
+	if c.autoIncrement {
+		collects = append(collects, "autoIncrement")
+	} else if c.isPrimaryKey {
+		collects = append(collects, "autoIncrement:false")
+	}
+
 	collects = append(collects, "column:"+pkg.Snake(c.name))
 	if c.unsigned {
 		c.typ += " unsigned"
@@ -98,10 +108,6 @@ func (c *Column) gorm() string {
 	}
 	if c.precision != "" {
 		collects = append(collects, "precision:"+c.precision)
-	}
-
-	if c.isPrimaryKey {
-		collects = append(collects, "primaryKey")
 	}
 
 	if len(c.indexNames) > 0 {
@@ -117,10 +123,6 @@ func (c *Column) gorm() string {
 
 	if c.defaultValue != "" {
 		collects = append(collects, "default:"+c.defaultValue)
-	}
-
-	if c.autoIncrement {
-		collects = append(collects, "autoIncrement")
 	}
 
 	return strings.Join(collects, ";")
